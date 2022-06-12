@@ -31,7 +31,7 @@ jobs:
           do
             echo ${file}
             echo "--------"
-            if [ ! $file = ".github/workflows/blank.yml" ]
+            if [ ! $file = ".github/workflows/main_check.yml" ]
             then
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
