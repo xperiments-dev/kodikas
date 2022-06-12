@@ -1,4 +1,4 @@
-name: CI-python-type-check
+name: python-type-check
 
 on:
   push:
