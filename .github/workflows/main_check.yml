@@ -2,7 +2,7 @@ name: CI-python-type-check
 
 on:
   push:
-    branches: [ main fix/final-gh-action ]
+    branches: [ "fix/final-gh-action" ]
   pull_request:
     branches: [ main fix/final-gh-action ]
 
