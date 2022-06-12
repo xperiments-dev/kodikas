@@ -2,9 +2,9 @@ name: CI-python-type-check
 
 on:
   push:
-    branches: [ "fix/final-gh-action" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main fix/final-gh-action ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
