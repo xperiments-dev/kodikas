@@ -21,17 +21,20 @@ jobs:
       - id: files
         uses: jitterbit/get-changed-files@v1
 
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Run monkeytype
         run: |
-          pip3 install MonkeyType
-          pip3 install requests
           echo ${{ steps.files.outputs.all }}
+          echo "~~~~~~~~`"
 
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
-            echo "~~~~~~~~~"
-            cat ${file}
+
             echo "--------"
             if [ ! $file = ".github/workflows/main_check.yml" ]
             then
