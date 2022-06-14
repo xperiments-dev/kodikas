@@ -30,6 +30,8 @@ jobs:
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
+            echo "~~~~~~~~~"
+            cat ${file}
             echo "--------"
             if [ ! $file = ".github/workflows/main_check.yml" ]
             then
