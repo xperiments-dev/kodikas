@@ -34,9 +34,9 @@ jobs:
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
-
+            check_extension=${file: -3}
             echo "--------"
-            if [ ! ${file} = ".github/workflows/main_check.yml" ] || [ ! ${file} = "requirements.txt" ]
+            if [ $check_extension = ".py" ]
             then
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
