@@ -2,7 +2,7 @@ name: python-type-check
 
 on:
   push:
-    branches: [ "main" "test-changed-file" ]
+    branches: [ main test-changed-file ]
   pull_request:
     branches: [ "main" ]
 
