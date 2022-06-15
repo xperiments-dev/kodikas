@@ -37,7 +37,7 @@ def test_message(request: Request, test_schema: TestSchema):
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile):
     print(file.filename)
-    print("@@@@@@@@@@@@@")
+    print("@@@@@@@@@@@@@@")
     contents = await file.read()
     print(contents)
     return {"filename": file.filename}
