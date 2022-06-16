@@ -1,8 +1,8 @@
 import re
 
 
-def func(a, b):
-    return a + b
+def func(a, c):
+    return a + c
 
 
 def hello():
