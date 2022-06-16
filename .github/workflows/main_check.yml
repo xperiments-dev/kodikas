@@ -31,8 +31,8 @@ jobs:
 
       - name: Run monkeytype
         run: |
-          echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
+          echo ${{ steps.files.outputs.added_modified }}
+          echo "~~~"
 
           for file in ${{ steps.files.outputs.added_modified }}
           do
