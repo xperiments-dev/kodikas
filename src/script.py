@@ -1,15 +1,19 @@
 import re
 
 
-def func(a, b):
+def func(a: int, b: int) -> int:
     return a + b
 
 
-def hello():
+def hello() -> str:
     return "hello world"
 
 
-def special_characters_in_string():
+def boooom(a={}):
+    return "hello"
+
+
+def special_characters_in_string() -> bool:
     string = "boooo"
     regex_pattern = re.compile("[@_!#$%^&'*()<>?/\|}\"{~:=]")
 
@@ -22,6 +26,7 @@ def special_characters_in_string():
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from time import time
+from typing import Any, List
 
 
 start = time()
@@ -29,7 +34,7 @@ start = time()
 print("*******")
 
 
-def boo(hello=[]):
+def boo(hello: List[Any]=[]) -> bool:
     with ThreadPoolExecutor() as executor:
         futures = []
         futures.append(executor.submit(special_characters_in_string))

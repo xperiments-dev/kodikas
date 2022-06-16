@@ -31,7 +31,7 @@ jobs:
           echo ${{ steps.files.outputs.all }}
           echo "~~~~~~~~"
 
-          for file in ${{ steps.files.outputs.all }}
+          for file in ${{ steps.files.outputs.added_modified }}
           do
             echo ${file}
             check_extension=${file: -3}
