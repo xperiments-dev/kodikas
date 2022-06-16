@@ -22,7 +22,7 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - run: |
           echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
+          echo "~~~~~~~~-fire-------"
 
       - name: Install python dependencies
         run: |
