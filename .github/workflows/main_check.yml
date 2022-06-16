@@ -20,6 +20,9 @@ jobs:
               python-version: '3.9'
       - id: files
         uses: jitterbit/get-changed-files@v1
+      - run: |
+          echo ${{ steps.files.outputs.all }}
+          echo "~~~~~~~~-fire-------"
 
       - name: Install python dependencies
         run: |
@@ -29,7 +32,7 @@ jobs:
       - name: Run monkeytype
         run: |
           echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~"
+          echo "~~~~~~~~-"
 
           for file in ${{ steps.files.outputs.added_modified }}
           do
