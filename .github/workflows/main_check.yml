@@ -1,12 +1,8 @@
 name: python-type-check
 
 on:
-  push:
-    branches: [ main test-changed-file ]
   pull_request:
     branches: [ "main" ]
-
-  workflow_dispatch:
 
 jobs:
   build:
