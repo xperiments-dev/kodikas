@@ -20,6 +20,9 @@ jobs:
               python-version: '3.9'
       - id: files
         uses: jitterbit/get-changed-files@v1
+        run: |
+          echo ${{ steps.files.outputs.all }}
+          echo "~~~~~~~~-"
 
       - name: Install python dependencies
         run: |
