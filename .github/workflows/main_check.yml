@@ -51,9 +51,9 @@ jobs:
               --data-raw '{
                   "previous_commit_sha":"${{ github.event.before }}",
                   "current_commit_sha": "${{ github.sha }}",
-                  "changed_code": "${CHANGED}",
-                  "original_code": "${ORIGINAL}",
-                  "file_path": "${file}"
+                  "changed_code": ${CHANGED},
+                  "original_code": ${ORIGINAL},
+                  "file_path": ${file}
               }'
             fi
           done
