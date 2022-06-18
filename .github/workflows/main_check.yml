@@ -21,7 +21,8 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v23
         with:
-          since_last_remote_commit: "true"
+          base_sha: "c01064bea2c6dfa1c4bf46f5c3674d3596df7d0a"
+
        
       - name: List all changed files
         run: |
