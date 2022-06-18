@@ -21,13 +21,13 @@ jobs:
 
       - name: print-sha
         run: | 
-          echo "${{ steps.sha-get.outputs.sha }}"
+          echo "${{ github.event.before }}"
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v23
         with:
-          base_sha: "${{ steps.sha-get.outputs.sha }}"
+          base_sha: "${{ github.event.before }}"
        
       - name: List all changed files
         run: |
