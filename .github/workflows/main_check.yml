@@ -24,6 +24,12 @@ jobs:
           echo ${{ steps.files.outputs.all }}
           echo "~~~~~~~~-"
 
+      - name: Gettttttttttt
+        run: |
+          echo ${{ github.event.base_ref }}
+          echo ${{ github.event.before }}
+          echo "%%%%%%%%%%%%%%%%%"
+
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
