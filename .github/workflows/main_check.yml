@@ -12,9 +12,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Get SHA 
+      - name: get-sha 
         run: |
-          OUTPUT=$(git rev-parse @~)
+          OUTPUT=$(git log -n 1 --skip 1 --pretty=format:"%H")
           echo "${OUTPUT}"
 
       - name: Get changed files
@@ -23,6 +23,8 @@ jobs:
         with:
           base_sha: "e66c028"
           sha: "f5fb253"
+        run: |
+          echo "$steps.get-sha.outputs.OUTPUT"
 
        
       - name: List all changed files
