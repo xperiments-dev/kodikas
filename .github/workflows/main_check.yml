@@ -20,7 +20,7 @@ jobs:
 
       - name: print-sha
         run: | 
-          echo "$steps.get-sha.outputs.sha"
+          echo "${{ steps.get-sha.outputs.sha }}"
 
       - name: Get changed files
         id: changed-files
