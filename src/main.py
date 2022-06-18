@@ -3,7 +3,7 @@ from time import time
 
 
 print(func(3, 5))
-print(func(2, 3))
+print(func(2, 8))
 print(hello())
 print(special_characters_in_string())
 
