@@ -48,7 +48,7 @@ jobs:
               curl --location --request POST 'http://139.59.14.101/send' \
               --header 'Content-Type: application/json' \
               --header 'Cookie: csrftoken=tkS73MCfhOUEMu86E5dY7iijuWumlG39gLhlonKWpPwZDOF93OGd9uw8emsDkEKI' \
-              --data-raw '{
+              --data-binary '{
                   "previous_commit_sha":"${{ github.event.before }}",
                   "current_commit_sha": "${{ github.sha }}",
                   "changed_code": "'"$CHANGED"'",
