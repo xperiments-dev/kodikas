@@ -11,7 +11,7 @@ from fastapi import (
     WebSocketDisconnect,
 )
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 from kodikas.schemas import TestSchema
 
 
@@ -33,11 +33,3 @@ def test_message(request: Request, test_schema: TestSchema):
         "message": "",
     }
 
-
-@app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
-    print(file.filename)
-    print("@@@@@@@@@@@@@@")
-    contents = await file.read()
-    print(contents)
-    return {"filename": file.filename}
