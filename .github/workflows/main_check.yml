@@ -12,7 +12,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: get-sha 
+      - name: get-sha
+        id: sha-get
         run: |
           OUTPUT=$(git log -n 1 --skip 1 --pretty=format:"%H")
           echo "${OUTPUT}"
@@ -20,7 +21,7 @@ jobs:
 
       - name: print-sha
         run: | 
-          echo "${{ steps.get-sha.outputs.sha }}"
+          echo "${{ steps.sha-get.outputs.sha }}"
 
       - name: Get changed files
         id: changed-files
