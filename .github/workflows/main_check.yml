@@ -16,16 +16,17 @@ jobs:
         run: |
           OUTPUT=$(git log -n 1 --skip 1 --pretty=format:"%H")
           echo "${OUTPUT}"
+          echo ::set-output name=sha::"${OUTPUT}"
+
+      - name: print-sha
+        run: | 
+          echo "$steps.get-sha.outputs.sha"
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v23
         with:
           base_sha: "e66c028"
-          sha: "f5fb253"
-        run: |
-          echo "$steps.get-sha.outputs.OUTPUT"
-
        
       - name: List all changed files
         run: |
