@@ -15,7 +15,7 @@ jobs:
       - name: get-sha
         id: sha-get
         run: |
-          OUTPUT=$(git log -n 1 --skip 1 --pretty=format:"%H")
+          OUTPUT=$(git log -n 1 --skip 1 --pretty=format:%h)
           echo "${OUTPUT}"
           echo ::set-output name=sha::"${OUTPUT}"
 
