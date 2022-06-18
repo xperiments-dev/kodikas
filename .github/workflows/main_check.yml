@@ -39,7 +39,9 @@ jobs:
         run: |
           echo ${{ steps.files.outputs.all }}
           echo "~~~~~~~~-"
-
+          monkeytype run src/main.py
+          echo "*************"
+          
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
