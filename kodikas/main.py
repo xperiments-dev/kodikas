@@ -1,4 +1,3 @@
-from unicodedata import name
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
@@ -15,7 +14,7 @@ from fastapi import (
 from fastapi import Depends, FastAPI
 from kodikas.schemas import TestSchema, CommitData
 from kodikas.utils.redis import Redis
-
+from typing import List
 
 app = FastAPI()
 
@@ -76,10 +75,12 @@ def send_commit_data(
 @app.post("/file-upload")
 def upload_commit_file(
     request: Request,
-    filename: UploadFile,
+    filenames: List[UploadFile],
     redis=Depends(redis_conn),
     status_code=status.HTTP_201_CREATED,
 ):
-    contents = filename.file.read()
+    for i in filenames:
+        contents = i.file.read()
+        print(contents)
 
-    return {"filename": filename.filename}
+    return {"success": True}
