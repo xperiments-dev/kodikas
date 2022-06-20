@@ -84,3 +84,4 @@ def upload_commit_file(
         print(contents)
 
     return {"success": True}
+
