@@ -1,5 +1,5 @@
 from unicodedata import name
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import (
     Depends,
@@ -71,3 +71,15 @@ def send_commit_data(
         "success": True,
         "message": "Commit data sent successfully.",
     }
+
+
+@app.post("/file-upload")
+def upload_commit_file(
+    request: Request,
+    filename: UploadFile,
+    redis=Depends(redis_conn),
+    status_code=status.HTTP_201_CREATED,
+):
+    contents = filename.file.read()
+
+    return {"filename": filename.filename}
