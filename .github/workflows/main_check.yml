@@ -44,11 +44,9 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames="./${file}"' \
-              -F 'filenames="./${file}"' 
+              -F 'filenames=@"./${file}"' \
+              -F 'filenames=@"./${file}"' 
             fi
           done
           
-          cat src/script.py
-          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.TEST_SECRET }}" https://api.github.com/repos/xperiments-dev/kodikas/branches/test2
   
