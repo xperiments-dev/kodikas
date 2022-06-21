@@ -6,7 +6,7 @@ def func(a, b):
 
 
 def hello():
-    return "hello world"
+    return "helorld"
 
 
 def special_characters_in_string():
