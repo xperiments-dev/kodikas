@@ -35,7 +35,7 @@ jobs:
           do
             echo ${file}
 
-            tempVar = $(file)
+            tempVar=$(file)
 
 
             check_extension=${file: -3}
