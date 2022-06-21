@@ -45,7 +45,7 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"/home/runner/work/kodikas/kodikas/${file}"'
+              -F 'filenames=@"/home/runner/work/kodikas/kodikas/src/main.py"'
             fi
           done
           
