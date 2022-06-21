@@ -41,6 +41,7 @@ jobs:
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
               curl --location --request POST 'http://139.59.14.101/send' \
+              -H "Content-Type: multipart/form-data" \
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
