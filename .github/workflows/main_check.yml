@@ -41,17 +41,15 @@ jobs:
             echo "--------"
             if [ $check_extension = ".py" ]
             then
-              ORIGINAL=$(cat ${file})
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
-              CHANGED=$(cat ${file})
               curl --location --request POST 'http://139.59.14.101/send' \
               -H 'Cookie: csrftoken=tkS73MCfhOUEMu86E5dY7iijuWumlG39gLhlonKWpPwZDOF93OGd9uw8emsDkEKI' \
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@${file}' \
-              -F 'filenames=@${file}' 
+              -F 'filenames=@"/workspace/kodikas/src/script.py"' \
+              -F 'filenames=@"/workspace/kodikas/src/script.py"' 
             fi
           done
           
