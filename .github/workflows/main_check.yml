@@ -33,10 +33,10 @@ jobs:
         run: |
           echo ${{ steps.files.outputs.all }}
           echo "~~~~~~~~-"
-          echo "${GITHUB_WORKSPACE}"
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
+            cat "${GITHUB_WORKSPACE}/${file}"
             check_extension=${file: -3}
             echo "--------"
             if [ $check_extension = ".py" ]
@@ -48,8 +48,8 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' 
+              -F 'filenames="${GITHUB_WORKSPACE}/${file}"' \
+              -F 'filenames="${GITHUB_WORKSPACE}/${file}"' 
             fi
           done
           
