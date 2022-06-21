@@ -36,7 +36,6 @@ jobs:
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
-            cat "${GITHUB_WORKSPACE}/${file}"
             check_extension=${file: -3}
             echo "--------"
             if [ $check_extension = ".py" ]
