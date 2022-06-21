@@ -45,7 +45,7 @@ jobs:
               --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               --header 'X-FILE-PATH: ${file}' \
-              --form 'filenames=@"/home/runner/work/kodikas/kodikas/src/main.py"'
+              --form 'filenames=@"/home/runner/work/kodikas/kodikas/${file}"'
             fi
           done
           
