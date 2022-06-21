@@ -75,17 +75,29 @@ def upload_commit_file(
     redis=Depends(redis_conn),
     status_code=status.HTTP_200_OK,
 ):
+    previous_commit = request.headers["x-previous-commit"]
+    current_commit = request.headers["x-current-commit"]
+    file_path = request.headers["x-file-path"]
 
     for i in filenames:
         contents = i.file.read()
 
-        filename = i.file.filename
-        file_mode, commit_sha, = filename.split(".")[
-            0
-        ].split("_")
-        if file_mode == "changed":
-            redis.hset(commit_sha, file_mode, contents)
-        elif file_mode == "original":
-            redis.hset(commit_sha, file_mode, contents)
+        if i.filename == "script.py":
+            changed_contents = contents
+
+        elif i.filename == "main.py":
+            original_contents = contents
+
+        redis_sub_data_map = {
+            "file_path": file_path,
+            "changed_file": changed_contents,
+            "original_file": original_contents,
+        }
+
+        store_commit_data = redis.hset(name=current_commit, mapping=redis_sub_data_map)
+
+        # At this point saving the current commit data is successful so we delete the data for previous commit
+        if store_commit_data:
+            redis.delete(previous_commit)
 
     return {"success": True}
