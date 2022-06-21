@@ -76,11 +76,15 @@ def send_commit_data(
 def upload_commit_file(
     request: Request,
     filenames: List[UploadFile],
+    commit_data: CommitData,
     redis=Depends(redis_conn),
     status_code=status.HTTP_201_CREATED,
 ):
     for i in filenames:
         contents = i.file.read()
         print(contents)
+
+    print("#########")
+    print(commit_data.dict())
 
     return {"success": True}
