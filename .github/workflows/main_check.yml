@@ -42,7 +42,7 @@ jobs:
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
 
-              temp_var = ${file}
+              temp_var=${file}
 
               curl --location --request POST 'http://139.59.14.101/file-upload' \
               --header "Content-Type: multipart/form-data" \
