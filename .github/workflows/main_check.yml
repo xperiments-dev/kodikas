@@ -44,7 +44,7 @@ jobs:
               --header "Content-Type: multipart/form-data" \
               --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
-              --header 'X-FILE-PATH: $file' \
+              --header 'X-FILE-PATH: '"$file" \
               --form 'filenames=@"./kodikas/main.py"'
             fi
           done
