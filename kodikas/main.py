@@ -52,11 +52,7 @@ def send_commit_data(
     the stored data of previous commit.
     """
 
-    redis_sub_data_map = {
-        "original_code": commit_data.original_code,
-        "changed_code": commit_data.changed_code,
-        "file_path": commit_data.file_path,
-    }
+    redis_sub_data_map = {"file_path": commit_data.file_path}
 
     store_commit_data = redis.hset(
         name=commit_data.current_commit_sha, mapping=redis_sub_data_map
@@ -76,16 +72,20 @@ def send_commit_data(
 def upload_commit_file(
     request: Request,
     filenames: List[UploadFile],
-    commit_data: CommitData,
     redis=Depends(redis_conn),
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_200_OK,
 ):
+
     for i in filenames:
         contents = i.file.read()
-        print(contents)
 
-    print("#########")
-    print(commit_data.dict())
+        filename = i.file.filename
+        file_mode, commit_sha, = filename.split(".")[
+            0
+        ].split("_")
+        if file_mode == "changed":
+            redis.hset(commit_sha, file_mode, contents)
+        elif file_mode == "original":
+            redis.hset(commit_sha, file_mode, contents)
 
     return {"success": True}
-
