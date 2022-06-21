@@ -41,11 +41,11 @@ jobs:
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
               curl --location --request POST 'http://139.59.14.101/send' \
-              -H "Content-Type: multipart/form-data" \
-              -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
-              -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
-              -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"/home/runner/work/kodikas/kodikas/src/main.py"'
+              --header "Content-Type: multipart/form-data" \
+              --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+              --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
+              --header 'X-FILE-PATH: ${file}' \
+              --form 'filenames=@"/home/runner/work/kodikas/kodikas/src/main.py"'
             fi
           done
           
