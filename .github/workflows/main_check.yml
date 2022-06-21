@@ -36,11 +36,11 @@ jobs:
             echo ${file}
             echo "!!!!!!!!!!!!"
             cd ${GITHUB_WORKSPACE}
-            echo "ls -l"
-
+            ls -l
+ 
             echo "##############"
 
-            
+
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
             then
