@@ -44,8 +44,8 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"./${file}"' \
-              -F 'filenames=@"./${file}"' 
+              -F 'filenames="./${file}"' \
+              -F 'filenames="./${file}"' 
             fi
           done
           
