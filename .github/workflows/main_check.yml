@@ -35,7 +35,10 @@ jobs:
           do
             echo ${file}
             echo "!!!!!!!!!!!!"
+            pwd
             cd ${GITHUB_WORKSPACE}
+            pwd
+            echo "^^^^^^^^^^^"
             ls -l
  
             echo "##############"
