@@ -34,15 +34,6 @@ jobs:
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
-            echo "!!!!!!!!!!!!"
-            pwd
-            cd ${GITHUB_WORKSPACE}
-            pwd
-            echo "^^^^^^^^^^^"
-            ls -l
- 
-            echo "##############"
-
 
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
@@ -54,8 +45,7 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"${file}"' \
-              -F 'filenames=@"${file}"' 
+              -F 'filenames=@"/home/runner/work/kodikas/kodikas/${file}"'
             fi
           done
           
