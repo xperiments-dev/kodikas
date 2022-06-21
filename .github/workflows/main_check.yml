@@ -34,6 +34,7 @@ jobs:
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
+            echo ${GITHUB_WORKSPACE}
 
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
@@ -45,7 +46,7 @@ jobs:
               --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               --header 'X-FILE-PATH: '"$file" \
-              --form 'filenames=@./$file'
+              --form 'filenames=@"$GITHUB_WORKSPACE/$file"'
             fi
           done
           
