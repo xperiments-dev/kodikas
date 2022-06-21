@@ -35,6 +35,9 @@ jobs:
           do
             echo ${file}
 
+            tempVar = $(file)
+
+
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
             then
@@ -46,7 +49,7 @@ jobs:
               --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               --header 'X-FILE-PATH: '"$file" \
-              --form 'filenames=@"/home/runner/work/kodikas/kodikas/requirements.txt"'
+              --form 'filenames=@"/home/runner/work/kodikas/kodikas/$tempVar"'
             fi
           done
           
