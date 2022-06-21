@@ -22,11 +22,13 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - run: |
           echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
+          echo "~~~~~~~~~"
+      
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      
       - name: Run monkeytype
         run: |
           for file in ${{ steps.files.outputs.all }}
@@ -42,8 +44,8 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
               -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' 
+              -F 'filenames="./${file}"' \
+              -F 'filenames="./${file}"' 
             fi
           done
           
