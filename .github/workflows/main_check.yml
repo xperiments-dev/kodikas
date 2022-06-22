@@ -47,7 +47,7 @@ jobs:
 
               curl --header "Content-Type: multipart/form-data" \
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
-              -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
+              -H 'X-CURRENT-COMMIT: ${{ github.head_ref }}.${{ github.sha }}' \
               -H 'X-FILE-PATH: '"$file" \
               -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
 
