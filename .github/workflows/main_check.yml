@@ -1,12 +1,7 @@
 name: python-type-check
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ "main" ]
+on: push
 
-  workflow_dispatch:
 
 jobs:
   build:

@@ -91,7 +91,6 @@ def upload_commit_file(
         elif i.filename == "main.py":
             original_contents = contents.decode("utf-8")
 
-    print(changed_contents)
     redis_sub_data_map = {
         "file_path": file_path,
         "changed_file": changed_contents,
