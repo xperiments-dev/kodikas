@@ -45,7 +45,11 @@ jobs:
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
 
 
-              curl -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
+              curl --header "Content-Type: multipart/form-data" \
+              -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+              -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
+              -H 'X-FILE-PATH: '"$file" \
+              -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
 
             fi
           done
