@@ -26,8 +26,6 @@ from time import time
 
 start = time()
 
-print("*******")
-
 
 def boo(hello=[]):
     with ThreadPoolExecutor() as executor:
