@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class TestSchema(BaseModel):
     text: str
+    world: str
 
 
 class CommitData(BaseModel):
