@@ -45,7 +45,7 @@ jobs:
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
 
 
-              curl -d "@$file" -X POST http://139.59.14.101/file-upload
+              curl -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
 
             fi
           done
