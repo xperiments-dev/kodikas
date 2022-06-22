@@ -22,37 +22,34 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - run: |
           echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
-
+          echo "~~~~~~~~~"
+      
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
+      
       - name: Run monkeytype
         run: |
-          echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
+
+            tempVar=${file}
+
+
             check_extension=${file: -3}
-            echo "--------"
             if [ $check_extension = ".py" ]
             then
               monkeytype run ${file}
               monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
+
               curl --location --request POST 'http://139.59.14.101/file-upload' \
-              -H 'Cookie: csrftoken=tkS73MCfhOUEMu86E5dY7iijuWumlG39gLhlonKWpPwZDOF93OGd9uw8emsDkEKI' \
-              -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
-              -H 'X-CURRENT-COMMIT: ${{ github.sha }}' \
-              -H 'X-FILE-PATH: ${file}' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' \
-              -F 'filenames=@"${GITHUB_WORKSPACE}/${file}"' 
+              --header "Content-Type: multipart/form-data" \
+              --header 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+              --header 'X-CURRENT-COMMIT: ${{ github.sha }}' \
+              --header 'X-FILE-PATH: '"$file" \
+              --form 'filenames=@"/home/runner/work/kodikas/kodikas/${{ tempVar }}"'
             fi
           done
           
-          cat src/script.py
-          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.TEST_SECRET }}" https://api.github.com/repos/xperiments-dev/kodikas/branches/test2
-
-  
