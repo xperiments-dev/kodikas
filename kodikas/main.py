@@ -75,9 +75,9 @@ def upload_commit_file(
     redis=Depends(redis_conn),
     status_code=status.HTTP_200_OK,
 ):
-    previous_commit = request.headers["x-previous-commit"]
-    current_commit = request.headers["x-current-commit"]
-    file_path = request.headers["x-file-path"]
+    previous_commit = request.headers["X-PREVIOUS-COMMIT"]
+    current_commit = request.headers["X-CURRENT-COMMIT"]
+    file_path = request.headers["X-FILE-PATH"]
 
     changed_contents = ""
     original_contents = ""
