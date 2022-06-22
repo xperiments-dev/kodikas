@@ -48,11 +48,13 @@ jobs:
               -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
 
               monkeytype run ${file}
-              monkeytype stub ${file} | tr / . | sed 's/\.py.*//' >  traces.txt
+              file_name="${file}" | tr / . | sed 's/\.py.*//'
+              monkeytype stub "$file_name"
 
               if [ -s traces.txt ]
               then
-                monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
+                file_name="${file}" | tr / . | sed 's/\.py.*//'
+                monkeytype apply "$file_name"
 
                 # After types have been added send changed code
 
