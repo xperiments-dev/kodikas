@@ -2,7 +2,7 @@ name: python-type-check
 
 on:
   push:
-    branches: [ main test-changed-file ]
+    branches: [ main ]
   pull_request:
     branches: [ "main" ]
 
@@ -20,28 +20,44 @@ jobs:
               python-version: '3.9'
       - id: files
         uses: jitterbit/get-changed-files@v1
-      - run: |
+      
+      - name: Output changed files
+        run: |
           echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
+      
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run monkeytype
+      
+      - name: Run Monkey
         run: |
-          echo ${{ steps.files.outputs.all }}
-          echo "~~~~~~~~-"
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
             check_extension=${file: -3}
-            echo "--------"
             if [ $check_extension = ".py" ]
             then
+              # Before types are added send original code
+              curl --header "Content-Type: multipart/form-data" \
+              -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+              -H 'X-CURRENT-COMMIT: ${{github.event.pull_request.head.sha}}' \
+              -H 'X-FILE-PATH: '"$file" \
+              -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
               monkeytype run ${file}
-              monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
+              file_name="${file}" | tr / . | sed 's/\.py.*//'
+              monkeytype stub "$file_name"
+              if [ -s traces.txt ]
+              then
+                file_name="${file}" | tr / . | sed 's/\.py.*//'
+                monkeytype apply "$file_name"
+                # After types have been added send changed code
+                curl --header "Content-Type: multipart/form-data" \
+                -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+                -H 'X-CURRENT-COMMIT: ${{github.event.pull_request.head.sha}}' \
+                -H 'X-FILE-PATH: '"$file" \
+                -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
+              fi
             fi
           done
           
-          cat src/script.py
-          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${{ secrets.TEST_SECRET }}" https://api.github.com/repos/xperiments-dev/kodikas/branches/test2
