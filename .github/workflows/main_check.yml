@@ -35,15 +35,11 @@ jobs:
           do
             echo ${file}
 
-            tempVar=${file}
-
-
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
             then
-              monkeytype run ${file}
-              monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
 
+              # Before types are added send original code
 
               curl --header "Content-Type: multipart/form-data" \
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
@@ -51,6 +47,21 @@ jobs:
               -H 'X-FILE-PATH: '"$file" \
               -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
 
+              monkeytype run ${file}
+              monkeytype stub ${file} | tr / . | sed 's/\.py.*//' >  traces.txt
+
+              if [ -s traces.txt ]
+              then
+                monkeytype apply ${file} | tr / . | sed 's/\.py.*//'
+
+                # After types have been added send changed code
+
+                curl --header "Content-Type: multipart/form-data" \
+                -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
+                -H 'X-CURRENT-COMMIT: ${{github.event.pull_request.head.sha}}' \
+                -H 'X-FILE-PATH: '"$file" \
+                -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
+              fi
             fi
           done
           
