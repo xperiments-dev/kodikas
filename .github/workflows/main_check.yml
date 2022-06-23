@@ -44,8 +44,12 @@ jobs:
               monkeytype stub "$file_name"
               if [ -s traces.txt ]
               then
+                # Delete traces file on every iteration
+                rm traces.txt
+
                 file_name="${file}" | tr / . | sed 's/\.py.*//'
                 monkeytype apply "$file_name"
+
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
