@@ -75,9 +75,9 @@ def upload_commit_file(
     redis=Depends(redis_conn),
     status_code=status.HTTP_200_OK,
 ):
-    previous_commit = request.headers["x-previous-commit"]
-    current_commit = request.headers["x-current-commit"]
-    file_path = request.headers["x-file-path"]
+    previous_commit = request.headers["X-PREVIOUS-COMMIT"]
+    current_commit = request.headers["X-CURRENT-COMMIT"]
+    file_path = request.headers["X-FILE-PATH"]
 
     changed_contents = ""
     original_contents = ""
@@ -107,3 +107,20 @@ def upload_commit_file(
         redis.delete(previous_commit)
 
     return {"success": True}
+
+
+@app.get("/commit-data")
+def get_commit_data(
+    self, request: Request, redis=Depends(redis_conn), status_code=status.HTTP_200_OK
+):
+
+    file_path = redis.hget("abcdef", "file_path")
+    changed_file = redis.hget("abcdef", "changed_file")
+    original_file = redis.hget("abcdef", "original_file")
+
+    return {
+        "success": True,
+        "changed_file": changed_file,
+        "original_file": original_file,
+        "file_path": file_path,
+    }
