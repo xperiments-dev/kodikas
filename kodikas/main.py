@@ -18,6 +18,18 @@ from typing import List
 
 app = FastAPI()
 
+origins = ["*"]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 # Dependency for APIs
 def redis_conn():
     return Redis().connection
@@ -111,7 +123,7 @@ def upload_commit_file(
 
 @app.get("/commit-data")
 def get_commit_data(
-    self, request: Request, redis=Depends(redis_conn), status_code=status.HTTP_200_OK
+    request: Request, redis=Depends(redis_conn), status_code=status.HTTP_200_OK
 ):
 
     file_path = redis.hget("abcdef", "file_path")
