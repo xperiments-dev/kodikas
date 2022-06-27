@@ -133,6 +133,9 @@ def get_commit_data(
     changed_file = redis.hget(commit_id, "changed_file")
     original_file = redis.hget(commit_id, "original_file")
 
+    print("*******")
+    print(original_file)
+
     return {
         "success": True,
         "changed_file": changed_file,
