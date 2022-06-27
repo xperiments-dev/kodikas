@@ -1,4 +1,4 @@
-name: python-type-check
+name: Kodikas-Check
 
 on:
   pull_request:
@@ -38,7 +38,7 @@ jobs:
               -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
               -H 'X-CURRENT-COMMIT: ${{github.event.pull_request.head.sha}}' \
               -H 'X-FILE-PATH: '"$file" \
-              -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
+              -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
               monkeytype run ${file}
               file_name="${file}" | tr / . | sed 's/\.py.*//'
               monkeytype stub "$file_name"
@@ -55,7 +55,7 @@ jobs:
                 -H 'X-PREVIOUS-COMMIT: ${{ github.event.before }}' \
                 -H 'X-CURRENT-COMMIT: ${{github.event.pull_request.head.sha}}' \
                 -H 'X-FILE-PATH: '"$file" \
-                -F "filenames=@$file" -X POST http://139.59.14.101/file-upload
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
               fi
             fi
           done

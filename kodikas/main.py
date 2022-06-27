@@ -37,7 +37,7 @@ def redis_conn():
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "You just discovered the root! Now find the branches ;)"}
 
 
 @app.post("/test")
