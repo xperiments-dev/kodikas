@@ -41,6 +41,9 @@ jobs:
               -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
               monkeytype run ${file}
               file_name="${file}" | tr / . | sed 's/\.py.*//'
+
+              echo "###########"
+              echo "$file_name"
               monkeytype stub "$file_name"
               if [ -s traces.txt ]
               then
