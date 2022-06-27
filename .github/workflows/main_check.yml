@@ -50,7 +50,6 @@ jobs:
                 # Delete traces file on every iteration
                 rm traces.txt
 
-                file_name="${file}" | tr / . | sed 's/\.py.*//'
                 monkeytype apply "${file_name}"
 
                 # After types have been added send changed code
