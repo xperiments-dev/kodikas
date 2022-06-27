@@ -121,7 +121,7 @@ def upload_commit_file(
     return {"success": True}
 
 
-@app.get("/commit-data/{commit_id}")
+@app.get("/commit-data/")
 def get_commit_data(
     commit_id: str,
     request: Request,
