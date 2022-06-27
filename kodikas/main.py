@@ -121,14 +121,17 @@ def upload_commit_file(
     return {"success": True}
 
 
-@app.get("/commit-data")
+@app.get("/commit-data/{commit_id}")
 def get_commit_data(
-    request: Request, redis=Depends(redis_conn), status_code=status.HTTP_200_OK
+    commit_id: str,
+    request: Request,
+    redis=Depends(redis_conn),
+    status_code=status.HTTP_200_OK,
 ):
 
-    file_path = redis.hget("abcdef", "file_path")
-    changed_file = redis.hget("abcdef", "changed_file")
-    original_file = redis.hget("abcdef", "original_file")
+    file_path = redis.hget(commit_id, "file_path")
+    changed_file = redis.hget(commit_id, "changed_file")
+    original_file = redis.hget(commit_id, "original_file")
 
     return {
         "success": True,
