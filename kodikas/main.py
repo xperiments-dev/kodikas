@@ -37,7 +37,7 @@ def redis_conn():
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "You just discovered the root! Now find the branches ;)"}
 
 
 @app.post("/test")
@@ -87,9 +87,9 @@ def upload_commit_file(
     redis=Depends(redis_conn),
     status_code=status.HTTP_200_OK,
 ):
-    previous_commit = request.headers["X-PREVIOUS-COMMIT"]
-    current_commit = request.headers["X-CURRENT-COMMIT"]
-    file_path = request.headers["X-FILE-PATH"]
+    previous_commit = request.headers["x-previous-commit"]
+    current_commit = request.headers["x-current-commit"]
+    file_path = request.headers["x-file-path"]
 
     changed_contents = ""
     original_contents = ""
@@ -121,14 +121,20 @@ def upload_commit_file(
     return {"success": True}
 
 
-@app.get("/commit-data")
+@app.get("/commit-data/")
 def get_commit_data(
-    request: Request, redis=Depends(redis_conn), status_code=status.HTTP_200_OK
+    commit_id: str,
+    request: Request,
+    redis=Depends(redis_conn),
+    status_code=status.HTTP_200_OK,
 ):
 
-    file_path = redis.hget("abcdef", "file_path")
-    changed_file = redis.hget("abcdef", "changed_file")
-    original_file = redis.hget("abcdef", "original_file")
+    file_path = redis.hget(commit_id, "file_path")
+    changed_file = redis.hget(commit_id, "changed_file")
+    original_file = redis.hget(commit_id, "original_file")
+
+    print("*******")
+    print(original_file)
 
     return {
         "success": True,
