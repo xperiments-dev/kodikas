@@ -42,8 +42,6 @@ jobs:
               monkeytype run ${file}
               file_name=$(echo "${file}" | tr / . | sed 's/\.py.*//')
 
-              echo "###########"
-              echo "$file_name"
               monkeytype stub "${file_name}"
               if [ -s traces.txt ]
               then
