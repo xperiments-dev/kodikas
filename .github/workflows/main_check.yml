@@ -40,18 +40,18 @@ jobs:
               -H 'x-file-path: '"$file" \
               -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
               monkeytype run ${file}
-              file_name="${file}" | tr / . | sed 's/\.py.*//'
+              file_name=$(echo "${file}" | tr / . | sed 's/\.py.*//')
 
               echo "###########"
               echo "$file_name"
-              monkeytype stub "$file_name"
+              monkeytype stub "${file_name}"
               if [ -s traces.txt ]
               then
                 # Delete traces file on every iteration
                 rm traces.txt
 
                 file_name="${file}" | tr / . | sed 's/\.py.*//'
-                monkeytype apply "$file_name"
+                monkeytype apply "${file_name}"
 
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
