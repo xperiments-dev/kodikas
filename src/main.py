@@ -9,4 +9,3 @@ print(special_characters_in_string())
 
 
 print(boo())
-print("###")

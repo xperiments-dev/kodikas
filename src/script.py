@@ -25,7 +25,6 @@ from time import time
 
 
 start = time()
-# Test comment
 
 
 def boo(hello=[]):
