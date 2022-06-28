@@ -42,7 +42,7 @@ jobs:
               monkeytype run ${file}
               file_name=$(echo "${file}" | tr / . | sed 's/\.py.*//')
 
-              monkeytype stub "${file_name}"
+              monkeytype stub "${file_name}" > traces.txt
               if [ -s traces.txt ]
               then
                 # Delete traces file on every iteration
