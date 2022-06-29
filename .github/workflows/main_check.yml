@@ -52,6 +52,8 @@ jobs:
                 -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/
                 monkeytype apply "${file_name}" > changed_file.py
 
+                echo "@@@@@@@@@@"
+                cat "${file}"
                 echo "###########"
                 cat changed_file.py
 
