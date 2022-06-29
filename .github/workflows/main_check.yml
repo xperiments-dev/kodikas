@@ -53,14 +53,14 @@ jobs:
                 monkeytype apply "${file_name}" > changed_file.py
 
                 echo "###########"
-                ls -l
+                cat changed_file.py
 
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
                 -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
                 -H 'x-file-path: '"$file" \
-                -F "filenames=@changed_file" -X POST https://kodikas.xperiments.dev/file-upload/
+                -F "filenames=@changed_file.py" -X POST https://kodikas.xperiments.dev/file-upload/
               
               else
                 list_of_files+=("${file_name}")
