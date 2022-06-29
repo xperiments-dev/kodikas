@@ -61,8 +61,6 @@ jobs:
                 -H 'x-file-path: '"$file" \
                 -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/
               
-              else
-                list_of_files+=("${file_name}")
               fi
             fi
           done
