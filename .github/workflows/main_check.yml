@@ -52,6 +52,9 @@ jobs:
                 -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/
                 monkeytype apply "${file_name}" > changed_file.py
 
+                echo "###########"
+                ls -l
+
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
