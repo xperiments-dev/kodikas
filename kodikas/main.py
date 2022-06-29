@@ -100,7 +100,7 @@ def upload_commit_file(
         if i.filename == "changed_file.py":
             changed_contents = contents.decode("utf-8")
 
-        elif i.filename == "script.py":
+        elif i.filename == "original_file.py":
             original_contents = contents.decode("utf-8")
 
     redis_sub_data_map = {
