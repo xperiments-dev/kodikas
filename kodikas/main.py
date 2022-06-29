@@ -80,7 +80,7 @@ def send_commit_data(
     }
 
 
-@app.post("/file-upload")
+@app.post("/file-upload/")
 def upload_commit_file(
     request: Request,
     filenames: List[UploadFile],
@@ -91,32 +91,24 @@ def upload_commit_file(
     current_commit = request.headers["x-current-commit"]
     file_path = request.headers["x-file-path"]
 
-    changed_contents = ""
-    original_contents = ""
-
     for i in filenames:
         contents = i.file.read()
 
-        if i.filename == "script.py":
+        if i.filename == "changed_file.py":
             changed_contents = contents.decode("utf-8")
+            redis.hset(name=current_commit, key="changed_file", value=changed_contents)
 
-        elif i.filename == "main.py":
+        elif i.filename == "original_file.py":
             original_contents = contents.decode("utf-8")
+            redis.hset(
+                name=current_commit, key="original_file", value=original_contents
+            )
 
-    redis_sub_data_map = {
-        "file_path": file_path,
-        "changed_file": changed_contents,
-        "original_file": original_contents,
-    }
-
-    store_commit_data = redis.hset(name=current_commit, mapping=redis_sub_data_map)
-
-    redis.hset(name=current_commit, key="original_file", value=contents)
-    redis.hset(name=current_commit, key="changed_file", value=contents)
+    redis.hset(name=current_commit, key="file_path", value=file_path)
 
     # At this point saving the current commit data is successful so we delete the data for previous commit
-    if store_commit_data:
-        redis.delete(previous_commit)
+    # if store_commit_data:
+    #     redis.delete(previous_commit)
 
     return {"success": True}
 
