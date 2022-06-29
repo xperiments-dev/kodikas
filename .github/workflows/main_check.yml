@@ -38,27 +38,32 @@ jobs:
               monkeytype run ${file}
               file_name=$(echo "${file}" | tr / . | sed 's/\.py.*//')
               monkeytype stub "${file_name}" > traces.txt
+
               if [ -s traces.txt ]
               then
                 # Delete traces file on every iteration
                 rm traces.txt
+
                 # Before types are added send original code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
                 -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
                 -H 'x-file-path: '"$file" \
-                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/?commit_id=${{github.event.pull_request.head.sha}}
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/
                 monkeytype apply "${file_name}"
+
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
                 -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
                 -H 'x-file-path: '"$file" \
-                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/?commit_id=${{github.event.pull_request.head.sha}}
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/
               
               else
                 list_of_files+=("${file_name}")
               fi
             fi
           done
-          
+
+          echo "$list_of_files"
+          echo "##############"
