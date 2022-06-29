@@ -63,7 +63,6 @@ jobs:
               
               else
                 list_of_files+=("${file_name}")
-              
               fi
             fi
           done
