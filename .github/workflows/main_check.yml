@@ -46,6 +46,7 @@ jobs:
                 
                 mv "${file}" original_file.py
 
+
                 # Before types are added send original code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
