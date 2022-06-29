@@ -36,8 +36,8 @@ jobs:
               
               monkeytype run ${file}
 
-              file_name="${file}" | tr / . | sed 's/\.py.*//'
-              monkeytype stub "${file}" | tr / . | sed 's/\.py.*//' > traces.txt
+              file_name=${file} | tr / . | sed 's/\.py.*//'
+              monkeytype stub "$file_name" > traces.txt
 
               if [ -s traces.txt ]
               then
