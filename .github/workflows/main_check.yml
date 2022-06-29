@@ -44,8 +44,6 @@ jobs:
                 # Delete traces file on every iteration
                 rm traces.txt
                 
-                mv "${file}" original_file.py
-
 
                 # Before types are added send original code
                 curl --header "Content-Type: multipart/form-data" \
