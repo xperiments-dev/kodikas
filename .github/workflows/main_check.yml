@@ -46,6 +46,14 @@ jobs:
               then
                 # Delete traces file on every iteration
                 rm traces.txt
+
+                # Before types are added send original code
+                curl --header "Content-Type: multipart/form-data" \
+                -H 'x-previous-commit: ${{ github.event.before }}' \
+                -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
+                -H 'x-file-path: '"$file" \
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
+
                 file_name="${file}" | tr / . | sed 's/\.py.*//'
                 monkeytype apply "$file_name"
                 # After types have been added send changed code
