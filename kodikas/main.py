@@ -111,12 +111,9 @@ def upload_commit_file(
 
     store_commit_data = redis.hset(name=current_commit, mapping=redis_sub_data_map)
 
-    redis.hset(name=current_commit, key="original_file", value=original_contents)
-    redis.hset(name=current_commit, key="changed_file", value=changed_contents)
-
     # At this point saving the current commit data is successful so we delete the data for previous commit
-    if store_commit_data:
-        redis.delete(previous_commit)
+    # if store_commit_data:
+    #     redis.delete(previous_commit)
 
     return {"success": True}
 
