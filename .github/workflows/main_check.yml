@@ -39,7 +39,7 @@ jobs:
               monkeytype stub "$file_name"
 
               echo "********"
-              echo "$file_name"
+              echo {$file_name}
 
               if [ -s traces.txt ]
               then
