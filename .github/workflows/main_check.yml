@@ -37,8 +37,14 @@ jobs:
               monkeytype run ${file}
               file_name="${file}" | tr / . | sed 's/\.py.*//'
               monkeytype stub "$file_name"
+
+              echo "********"
+              echo "$file_name"
+
               if [ -s traces.txt ]
               then
+                echo "!!!!!!!!!!"
+
                 # Delete traces file on every iteration
                 rm traces.txt
 
