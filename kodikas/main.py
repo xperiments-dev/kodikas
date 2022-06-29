@@ -83,7 +83,6 @@ def send_commit_data(
 @app.post("/file-upload/")
 def upload_commit_file(
     request: Request,
-    commit_id: str,
     filenames: List[UploadFile],
     redis=Depends(redis_conn),
     status_code=status.HTTP_200_OK,
