@@ -27,41 +27,38 @@ jobs:
       
       - name: Run Monkey
         run: |
+          # Define a list of files for which we dont have to `run`
+          list_of_files=()
           for file in ${{ steps.files.outputs.all }}
           do
             echo ${file}
             check_extension=${file: -3}
             if [ $check_extension = ".py" ]
             then
-              
               monkeytype run ${file}
-
-              file_name=${file} | tr / . | sed 's/\.py.*//'
-              monkeytype stub "$file_name" > traces.txt
-
+              file_name=$(echo "${file}" | tr / . | sed 's/\.py.*//')
+              monkeytype stub "${file_name}" > traces.txt
               if [ -s traces.txt ]
               then
-
                 # Delete traces file on every iteration
                 rm traces.txt
-
                 # Before types are added send original code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
                 -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
                 -H 'x-file-path: '"$file" \
-                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
-
-                echo "^^^^^^^^^^^^^"
-
-                file_name="${file}" | tr / . | sed 's/\.py.*//'
-                monkeytype apply "$file_name"
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/?commit_id=${{github.event.pull_request.head.sha}}
+                monkeytype apply "${file_name}"
                 # After types have been added send changed code
                 curl --header "Content-Type: multipart/form-data" \
                 -H 'x-previous-commit: ${{ github.event.before }}' \
                 -H 'x-current-commit: ${{github.event.pull_request.head.sha}}' \
                 -H 'x-file-path: '"$file" \
-                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
+                -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload/?commit_id=${{github.event.pull_request.head.sha}}
+              
+              else
+                list_of_files+=("${file_name}")
               fi
             fi
           done
+          
