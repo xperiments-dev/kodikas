@@ -54,6 +54,8 @@ jobs:
                 -H 'x-file-path: '"$file" \
                 -F "filenames=@$file" -X POST https://kodikas.xperiments.dev/file-upload
 
+                echo "^^^^^^^^^^^^^"
+
                 file_name="${file}" | tr / . | sed 's/\.py.*//'
                 monkeytype apply "$file_name"
                 # After types have been added send changed code
