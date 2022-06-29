@@ -96,6 +96,9 @@ def upload_commit_file(
 
     for i in filenames:
         contents = i.file.read()
+        print(i.filename)
+        print("************")
+        print(contents)
 
         if i.filename == "changed_file.py":
             changed_contents = contents.decode("utf-8")
