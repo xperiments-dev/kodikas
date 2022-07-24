@@ -14,7 +14,9 @@ from fastapi import (
 from fastapi import Depends, FastAPI
 from kodikas.schemas import TestSchema, CommitData
 from kodikas.utils.redis import Redis
-from typing import List
+from typing import List, final
+import requests
+
 
 app = FastAPI()
 
@@ -131,3 +133,85 @@ def get_commit_data(
         "original_file": original_file,
         "file_path": file_path,
     }
+
+
+@app.get("/repos/")
+def get_all_repos(
+    request: Request,
+    redis=Depends(redis_conn),
+    repo_name: str = None,
+    status_code=status.HTTP_200_OK,
+):
+
+    """API to get all the repos for an organisation."""
+
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"token {os.getenv('GITHUB_TOKEN')}",
+    }
+
+    final_response = []
+    if not repo_name:
+
+        all_repos = requests.get(
+            "https://api.github.com/orgs/xperiments-dev/repos", headers=headers
+        )
+
+        for repo in all_repos.json():
+            final_response.append({"repo_id": repo["id"], "repo_name": repo["name"]})
+
+    else:
+        get_repo = requests.get(
+            f"https://api.github.com/repos/xperiments-dev/{repo_name}", headers=headers
+        )
+
+        for repo in get_repo.json():
+            final_response.append(repo["name"])
+
+    return {"success": True, "repos": final_response}
+
+
+@app.get("/prs/")
+def get_prs(
+    request: Request,
+    redis=Depends(redis_conn),
+    repo_name: str = None,
+    status_code=status.HTTP_200_OK,
+):
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"token {os.getenv('GITHUB_TOKEN')}",
+    }
+    final_response = []
+    if repo_name:
+
+        get_prs = requests.get(
+            f"https://api.github.com/repos/xperiments-dev/{repo_name}/pulls",
+            headers=headers,
+        )
+
+        for pr_data in get_prs.json():
+            final_response.append(
+                {
+                    "pr_url": pr_data["url"],
+                    "pr_title": pr_data["title"],
+                    "pr_state": pr_data["state"],
+                    "pr_number": pr_data["number"],
+                    "pr_json_data": pr_data,
+                }
+            )
+
+        return {"success": True, "repos": final_response}
+
+    else:
+        return {"success": False, "repos": final_response}
