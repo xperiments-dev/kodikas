@@ -38,5 +38,5 @@ def boo(hello=[]):
 
 
 def manner(dickto={}):
-    mannerism = {dickto}
-    return mannerism
+    mannerism = {"man": "winner"}
+    return dickto.keys(), mannerism
