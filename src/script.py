@@ -37,9 +37,9 @@ def boo(hello=[]):
     return special_characters_in_string()
 
 
-def manner(dickto={}):
+def mannerbo(dickto={}):
     mannerism = {"man": "winner"}
     return dickto.keys(), mannerism
 
 
-# TEST CODE
+# TEST
