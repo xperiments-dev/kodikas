@@ -9,5 +9,5 @@ print(special_characters_in_string())
 
 
 print(boo())
-print(manner(dickto={"boom": "beach"}))
+print(manner({"boom": "beach"}))
 print("This is the commit to tests flow end to end")
