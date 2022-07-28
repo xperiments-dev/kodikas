@@ -207,6 +207,7 @@ def get_prs(
                     "pr_title": pr_data["title"],
                     "pr_state": pr_data["state"],
                     "pr_number": pr_data["number"],
+                    "latest_commit_id": pr_data["head"]["sha"],
                     "pr_json_data": pr_data,
                 }
             )
