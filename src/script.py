@@ -37,4 +37,6 @@ def boo(hello=[]):
     return special_characters_in_string()
 
 
-# NOTE: THIS IS A TEST COMMIT
+def manner(dickto={}):
+    mannerism = {dickto}
+    return mannerism
