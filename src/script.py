@@ -39,7 +39,7 @@ def boo(hello=[]):
 
 def mannerbo(dickto={}):
     mannerism = {"man": "winner"}
-    return dickto.keys(), mannerism
+    return dickto, mannerism
 
 
 # TEST
