@@ -35,3 +35,11 @@ def boo(hello=[]):
         for future in as_completed(futures):
             print(future.result())
     return special_characters_in_string()
+
+
+def mannerbo(dickto={}):
+    mannerism = {"man": "winner"}
+    return dickto, mannerism
+
+
+# TEST
